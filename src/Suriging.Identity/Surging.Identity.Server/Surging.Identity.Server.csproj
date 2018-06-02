@@ -21,6 +21,7 @@
     <ProjectReference Include="..\..\Surging.Core\Surging.Core.NLog\Surging.Core.Nlog.csproj" />
     <ProjectReference Include="..\..\Surging.Core\Surging.Core.ServiceHosting\Surging.Core.ServiceHosting.csproj" />
     <ProjectReference Include="..\..\Surging.Core\Surging.Core.System\Surging.Core.System.csproj" />
+    <ProjectReference Include="..\Surging.Identity.IModuleService\Surging.Identity.IModuleService.csproj" />
     <ProjectReference Include="..\Surging.Identity.ModuleService\Surging.Identity.ModuleService.csproj" />
   </ItemGroup>
 

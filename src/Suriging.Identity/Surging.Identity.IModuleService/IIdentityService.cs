@@ -1,8 +1,7 @@
-﻿using Surging.Core.CPlatform.Runtime.Server.Implementation.ServiceDiscovery.Attributes;
+﻿using Surging.Core.Caching;
+using Surging.Core.CPlatform.Runtime.Server.Implementation.ServiceDiscovery.Attributes;
+using Surging.Core.System.Intercept;
 using Surging.Identity.IModuleService.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Surging.Identity.IModuleService
@@ -12,6 +11,7 @@ namespace Surging.Identity.IModuleService
         Task<UserModel> Authentication(LoginModel requestData);
 
         [Service(Date = "2018-5-31", Director = "iwaitu", Name = "获取用户")]
+        [InterceptMethod(CachingMethod.Get, Key = "GetUser_id_{0}", CacheSectionType = SectionType.ddlCache, Mode = CacheTargetType.Redis, Time = 480)]
         Task<UserModel> GetUserInfo(string id);
 
         [Service(Date = "2018-5-31", Director = "iwaitu", Name = "检查证件号是否唯一")]

@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Surging.Core\Surging.Core.CPlatform\Surging.Core.CPlatform.csproj" />
+    <ProjectReference Include="..\..\Surging.Core\Surging.Core.System\Surging.Core.System.csproj" />
     <ProjectReference Include="..\Surging.Identity.Core\Surging.Identity.Core.csproj" />
   </ItemGroup>
 

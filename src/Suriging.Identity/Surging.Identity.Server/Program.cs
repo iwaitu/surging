@@ -14,6 +14,7 @@ using Surging.Core.EventBusRabbitMQ;
 using Surging.Core.EventBusRabbitMQ.Configurations;
 using Surging.Core.Nlog;
 using Surging.Core.ProxyGenerator;
+using Surging.Core.ServiceHosting;
 using Surging.Core.ServiceHosting.Internal.Implementation;
 using System;
 using System.IO;
