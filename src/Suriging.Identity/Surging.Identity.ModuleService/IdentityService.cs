@@ -19,7 +19,7 @@ namespace Surging.Identity.ModuleService
         private UserManager<SurgingUser> _usrManager;
         private UserStore<SurgingUser> _usrStore;
 
-        public UserService()
+        public IdentityService()
         {
             _usrStore = new UserStore<SurgingUser>(_db);
             _usrManager = new UserManager<SurgingUser>(_usrStore, null, null, null, null, null, null, null, null);

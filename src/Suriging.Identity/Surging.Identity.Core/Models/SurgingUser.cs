@@ -7,9 +7,6 @@ namespace Surging.Identity.Core.Models
 
     public class SurgingUser : IdentityUser
     {
-        [Key]
-
-        public string Id { get; set; }
         /// <summary>
         /// 真是姓名
         /// </summary>
