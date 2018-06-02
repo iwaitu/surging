@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  surging.apigateway:
+    image: ${DOCKER_REGISTRY}surgingapigateway
+    build:
+      context: .
+      dockerfile: Surging.ApiGateway/Dockerfile

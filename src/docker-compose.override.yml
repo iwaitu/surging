@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  surging.apigateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "729"
