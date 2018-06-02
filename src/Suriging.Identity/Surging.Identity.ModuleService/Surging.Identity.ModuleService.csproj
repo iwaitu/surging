@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Surging.Core\Surging.Core.ProxyGenerator\Surging.Core.ProxyGenerator.csproj" />
+    <ProjectReference Include="..\Surging.Identity.Core\Surging.Identity.Core.csproj" />
+    <ProjectReference Include="..\Surging.Identity.Database\Surging.Identity.Database.csproj" />
+    <ProjectReference Include="..\Surging.Identity.IModuleService\Surging.Identity.IModuleService.csproj" />
+  </ItemGroup>
+
+</Project>
