@@ -69,6 +69,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surging.Identity.IModuleSer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surging.Identity.ModuleService", "Suriging.Identity\Surging.Identity.ModuleService\Surging.Identity.ModuleService.csproj", "{49E12979-592B-40B1-B516-7F2C9E7984B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surging.Identity.Server", "Suriging.Identity\Surging.Identity.Server\Surging.Identity.Server.csproj", "{EC7F1D18-EFAD-4248-B8B7-A003E6D9943C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -187,6 +189,10 @@ Global
 		{49E12979-592B-40B1-B516-7F2C9E7984B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49E12979-592B-40B1-B516-7F2C9E7984B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49E12979-592B-40B1-B516-7F2C9E7984B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC7F1D18-EFAD-4248-B8B7-A003E6D9943C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC7F1D18-EFAD-4248-B8B7-A003E6D9943C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC7F1D18-EFAD-4248-B8B7-A003E6D9943C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC7F1D18-EFAD-4248-B8B7-A003E6D9943C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -218,6 +224,7 @@ Global
 		{97206AF0-4987-4E1A-8377-BB155C6485A1} = {97F3A538-57EB-4248-8511-448980B33A60}
 		{3040D7EC-F6FD-45C0-80F4-1585B9944E2B} = {97F3A538-57EB-4248-8511-448980B33A60}
 		{49E12979-592B-40B1-B516-7F2C9E7984B3} = {97F3A538-57EB-4248-8511-448980B33A60}
+		{EC7F1D18-EFAD-4248-B8B7-A003E6D9943C} = {97F3A538-57EB-4248-8511-448980B33A60}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9889BCDC-E6A6-448F-B01A-ECFD0FAF294C}
