@@ -71,6 +71,7 @@ new Surging.IModuleServices.Common.Models.UserModel
         Task PublishThroughEventBusAsync(IntegrationEvent evt);
 
         [Service(Date = "2018-5-23", Director = "fanly", Name = "获取用户")]
+        [Command(Strategy = StrategyType.Injection,  ShuntStrategy = AddressSelectorMode.HashAlgorithm, ExecutionTimeoutInMilliseconds = 2500, BreakerRequestVolumeThreshold = 3, Injection = @"return 1;", RequestCacheEnabled = false)]
         Task<ApiResult<UserModel>> GetApiResult();
         [Service(Date = "2018-6-3", Director = "iwaitu", Name = "分布式测试")]
         Task<int> TestUser(int id);
