@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Surging.Core.Caching;
 using Surging.Core.Caching.Configurations;
@@ -16,8 +15,8 @@ using Surging.Core.Nlog;
 using Surging.Core.ProxyGenerator;
 using Surging.Core.ServiceHosting;
 using Surging.Core.ServiceHosting.Internal.Implementation;
+using Surging.Core.System.Intercept;
 using System;
-using System.IO;
 using System.Text;
 
 namespace Surging.Identity.Server
@@ -26,9 +25,9 @@ namespace Surging.Identity.Server
     {
         static void Main(string[] args)
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true).Build();
+            //var configuration = new ConfigurationBuilder()
+            //    .SetBasePath(Directory.GetCurrentDirectory())
+            //    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true).Build();
 
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -37,6 +36,7 @@ namespace Surging.Identity.Server
                 {
                     builder.AddMicroService(option =>
                     {
+                        //option.AddClientIntercepted(typeof(CacheProviderInterceptor));
                         option.AddServiceRuntime()
                         .AddRelateService()
                         .AddConfigurationWatch()
@@ -46,16 +46,6 @@ namespace Surging.Identity.Server
                         .UseRabbitMQTransport()
                         .AddRabbitMQAdapt()
                         .AddCache()
-                        //.UseKafkaMQTransport(kafkaOption =>
-                        //{
-                        //    kafkaOption.Servers = "127.0.0.1";
-                        //    kafkaOption.LogConnectionClose = false;
-                        //    kafkaOption.MaxQueueBuffering = 10;
-                        //    kafkaOption.MaxSocketBlocking = 10;
-                        //    kafkaOption.EnableAutoCommit = false;
-                        //})
-                        //.AddKafkaMQAdapt()
-                        //.UseProtoBufferCodec()
                         .UseMessagePackCodec();
                         builder.Register(p => new CPlatformContainer(ServiceLocator.Current));
                     });
@@ -69,6 +59,8 @@ namespace Surging.Identity.Server
                 .UseServer(options =>
                 {
                     // options.IpEndpoint = new IPEndPoint(IPAddress.Any, 98);  
+                    options.Ip = "127.0.0.1";
+                    options.Port = 100;
                     options.Token = "True";
                     options.ExecutionTimeoutInMilliseconds = 30000;
                     options.MaxConcurrentRequests = 200;
@@ -78,7 +70,7 @@ namespace Surging.Identity.Server
                 build.AddEventBusFile("eventBusSettings.json", optional: false))
                 .Configure(build =>
                 build.AddCacheFile("cacheSettings.json", optional: false, reloadOnChange: true))
-                  .Configure(build =>
+                .Configure(build =>
                 build.AddCPlatformFile("surgingSettings.json", optional: false, reloadOnChange: true))
                 .UseProxy()
                 .UseStartup<Startup>()

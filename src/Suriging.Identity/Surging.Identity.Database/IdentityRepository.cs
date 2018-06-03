@@ -20,7 +20,7 @@ namespace Surging.Identity.Database
         {
             optionsBuilder.EnableSensitiveDataLogging()
                 .UseLoggerFactory(_loggerFactory)
-                .UseSqlServer(@"");
+                .UseSqlServer(@"Data Source=www.nngeo.com,52983;Initial Catalog=usertest;Integrated Security=True;User ID=sa;Password=Nlis@1204;Persist Security Info=True;Integrated Security=False;MultipleActiveResultSets=true;");
         }
     }
 }

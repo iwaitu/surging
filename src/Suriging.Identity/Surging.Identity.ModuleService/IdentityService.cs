@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Surging.Identity.ModuleService
 {
-    [ModuleName("User")]
+    [ModuleName("Identity")]
     public class IdentityService : ProxyServiceBase, IIdentityService
     {
         private IdentityRepository _db = new IdentityRepository();
@@ -63,6 +63,8 @@ namespace Surging.Identity.ModuleService
             var exituser = await _usrManager.FindByNameAsync(username);
             if (exituser != null)
                 return null;
+            user.UserName = username;
+            user.PhoneNumber = username;
             var passwordHasher = new PasswordHasher<SurgingUser>();
             var pwhash = passwordHasher.HashPassword(user, password);
             user.PasswordHash = pwhash;

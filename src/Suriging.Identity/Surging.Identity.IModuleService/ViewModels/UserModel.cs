@@ -1,4 +1,5 @@
 ﻿using MessagePack;
+using Surging.Core.System.Intercept;
 using System;
 
 namespace Surging.Identity.IModuleService.ViewModels
@@ -6,8 +7,10 @@ namespace Surging.Identity.IModuleService.ViewModels
     [MessagePackObject]
     public class UserModel
     {
+        [CacheKey(1)]
         [Key(0)]
         public string Id { get; set; }
+        [CacheKey(2)]
         [Key(1)]
         public string UserName { get; set; }
         [Key(2)]

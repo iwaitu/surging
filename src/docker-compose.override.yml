@@ -6,3 +6,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - "729"
+
+  surging.identity.server:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "98"

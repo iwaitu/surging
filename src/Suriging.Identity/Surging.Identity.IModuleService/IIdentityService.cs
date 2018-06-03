@@ -1,4 +1,5 @@
 ﻿using Surging.Core.Caching;
+using Surging.Core.CPlatform.Ioc;
 using Surging.Core.CPlatform.Runtime.Server.Implementation.ServiceDiscovery.Attributes;
 using Surging.Core.System.Intercept;
 using Surging.Identity.IModuleService.ViewModels;
@@ -6,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace Surging.Identity.IModuleService
 {
-    public interface IIdentityService
+    [ServiceBundle("api/{Service}")]
+    public interface IIdentityService:IServiceKey
     {
         Task<UserModel> Authentication(LoginModel requestData);
 

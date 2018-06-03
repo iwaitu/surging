@@ -6,3 +6,10 @@ services:
     build:
       context: .
       dockerfile: Surging.ApiGateway/Dockerfile
+
+  surging.identity.server:
+    image: ${DOCKER_REGISTRY}surgingidentityserver
+    build:
+      context: .
+      dockerfile: Suriging.Identity/Surging.Identity.Server/Dockerfile
+

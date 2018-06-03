@@ -61,15 +61,17 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Surging.Identity", "Surging.Identity", "{97F3A538-57EB-4248-8511-448980B33A60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surging.Identity.Core", "Suriging.Identity\Surging.Identity.Core\Surging.Identity.Core.csproj", "{9CB33A73-DCBE-41D2-876C-7146A4105A7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surging.Identity.Core", "Suriging.Identity\Surging.Identity.Core\Surging.Identity.Core.csproj", "{9CB33A73-DCBE-41D2-876C-7146A4105A7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surging.Identity.Database", "Suriging.Identity\Surging.Identity.Database\Surging.Identity.Database.csproj", "{97206AF0-4987-4E1A-8377-BB155C6485A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surging.Identity.Database", "Suriging.Identity\Surging.Identity.Database\Surging.Identity.Database.csproj", "{97206AF0-4987-4E1A-8377-BB155C6485A1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surging.Identity.IModuleService", "Suriging.Identity\Surging.Identity.IModuleService\Surging.Identity.IModuleService.csproj", "{3040D7EC-F6FD-45C0-80F4-1585B9944E2B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surging.Identity.ModuleService", "Suriging.Identity\Surging.Identity.ModuleService\Surging.Identity.ModuleService.csproj", "{49E12979-592B-40B1-B516-7F2C9E7984B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surging.Identity.ModuleService", "Suriging.Identity\Surging.Identity.ModuleService\Surging.Identity.ModuleService.csproj", "{49E12979-592B-40B1-B516-7F2C9E7984B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surging.Identity.Server", "Suriging.Identity\Surging.Identity.Server\Surging.Identity.Server.csproj", "{EC7F1D18-EFAD-4248-B8B7-A003E6D9943C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surging.Identity.Server", "Suriging.Identity\Surging.Identity.Server\Surging.Identity.Server.csproj", "{EC7F1D18-EFAD-4248-B8B7-A003E6D9943C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surging.Identity.xUnitTest", "Suriging.Identity\Surging.Identity.xUnitTest\Surging.Identity.xUnitTest.csproj", "{A0992746-FF48-42DF-8B67-6D73A2540A67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -193,6 +195,10 @@ Global
 		{EC7F1D18-EFAD-4248-B8B7-A003E6D9943C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC7F1D18-EFAD-4248-B8B7-A003E6D9943C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC7F1D18-EFAD-4248-B8B7-A003E6D9943C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0992746-FF48-42DF-8B67-6D73A2540A67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0992746-FF48-42DF-8B67-6D73A2540A67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0992746-FF48-42DF-8B67-6D73A2540A67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0992746-FF48-42DF-8B67-6D73A2540A67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -225,6 +231,7 @@ Global
 		{3040D7EC-F6FD-45C0-80F4-1585B9944E2B} = {97F3A538-57EB-4248-8511-448980B33A60}
 		{49E12979-592B-40B1-B516-7F2C9E7984B3} = {97F3A538-57EB-4248-8511-448980B33A60}
 		{EC7F1D18-EFAD-4248-B8B7-A003E6D9943C} = {97F3A538-57EB-4248-8511-448980B33A60}
+		{A0992746-FF48-42DF-8B67-6D73A2540A67} = {97F3A538-57EB-4248-8511-448980B33A60}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9889BCDC-E6A6-448F-B01A-ECFD0FAF294C}
