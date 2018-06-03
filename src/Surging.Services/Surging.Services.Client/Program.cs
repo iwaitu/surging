@@ -87,13 +87,13 @@ namespace Surging.Services.Client
             Parallel.For(0, connectionCount /1000, new ParallelOptions() { MaxDegreeOfParallelism = 10 },u =>
              {
                  for (var i = 0; i < 1000; i++)
-                     Test(userProxy, connectionCount);
+                     Test(userProxy, connectionCount,i);
              });
         }
 
-        public static void Test(IUserService userProxy,int connectionCount)
+        public static void Test(IUserService userProxy,int connectionCount,int i)
         {
-            var a = userProxy.GetDictionary().Result;
+            var a = userProxy.TestUser(i).Result;
             IncreaseSuccessConnection(connectionCount);
         }
         

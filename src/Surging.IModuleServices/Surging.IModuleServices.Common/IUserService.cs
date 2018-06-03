@@ -72,5 +72,7 @@ new Surging.IModuleServices.Common.Models.UserModel
 
         [Service(Date = "2018-5-23", Director = "fanly", Name = "获取用户")]
         Task<ApiResult<UserModel>> GetApiResult();
+        [Service(Date = "2018-6-3", Director = "iwaitu", Name = "分布式测试")]
+        Task<int> TestUser(int id);
     }
 }

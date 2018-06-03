@@ -104,6 +104,12 @@ namespace Surging.Modules.Common.Domain
             return Task.FromResult(new ApiResult<UserModel>() { Value = new UserModel { Name = "fanly" }, StatusCode=200 });
         }
 
+        public Task<int> TestUser(int id)
+        {
+            Console.WriteLine("taskid = " + id);
+            return Task.FromResult(id);
+        }
+
         #endregion Implementation of IUserService
     }
 }

@@ -10,6 +10,7 @@ using Surging.IModuleServices.User;
 using Surging.Modules.Common.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Surging.Modules.Common.Domain
@@ -66,6 +67,7 @@ namespace Surging.Modules.Common.Domain
 
         public Task<bool> GetDictionary()
         {
+            Console.Write(".");
             return Task.FromResult<bool>(true);
         }
 
@@ -104,6 +106,13 @@ namespace Surging.Modules.Common.Domain
         public Task<ApiResult<UserModel>> GetApiResult()
         {
             return Task.FromResult(new ApiResult<UserModel>() { Value = new UserModel { Name = "fanly" }, StatusCode = 200 });
+        }
+
+        public Task<int> TestUser(int id)
+        {
+            Thread.Sleep(100);
+            Console.WriteLine("taskid = " + id);
+            return Task.FromResult(id);
         }
         #endregion Implementation of IUserService
     }

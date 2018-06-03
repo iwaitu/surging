@@ -96,14 +96,14 @@ namespace Surging.Services.Client
 
                 do
                 {
-                    Console.WriteLine("正在循环 1w次调用 GetUser.....");
+                    Console.WriteLine("正在循环 1w次调用 TestUser.....");
                 
                     //1w次调用
                     var watch = Stopwatch.StartNew();
                     for (var i = 0; i < 10000; i++)
                     {
                         //var a = userProxy.GetDictionary().Result;
-                        var a = userProxy.GetDictionary().Result;
+                        var a = userProxy.TestUser(i).Result;
                         //var result = serviceProxyProvider.Invoke<object>(new Dictionary<string, object>(), "api/user/GetDictionary", "User").Result;
                     }
                     watch.Stop();
