@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Surging.Core.Caching;
 using Surging.Core.Caching.Configurations;
@@ -17,6 +18,7 @@ using Surging.Core.ServiceHosting;
 using Surging.Core.ServiceHosting.Internal.Implementation;
 using Surging.Core.System.Intercept;
 using System;
+using System.IO;
 using System.Text;
 
 namespace Surging.Identity.Server
@@ -25,11 +27,7 @@ namespace Surging.Identity.Server
     {
         static void Main(string[] args)
         {
-            //var configuration = new ConfigurationBuilder()
-            //    .SetBasePath(Directory.GetCurrentDirectory())
-            //    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true).Build();
-
-
+            
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             var host = new ServiceHostBuilder()
                 .RegisterServices(builder =>

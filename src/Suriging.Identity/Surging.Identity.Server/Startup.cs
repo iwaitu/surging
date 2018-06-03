@@ -1,11 +1,14 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Surging.Core.Caching;
 using Surging.Core.Caching.Configurations;
 using Surging.Core.CPlatform.Utilities;
 using Surging.Core.EventBusRabbitMQ.Configurations;
+using Surging.Identity.Database;
 
 namespace Surging.Identity.Server
 {
@@ -15,12 +18,17 @@ namespace Surging.Identity.Server
         {
             ConfigureEventBus(config);
             ConfigureCache(config);
+            ConfigureAppSettings(config);
+            Configuration = config.Build();
         }
+
+        public IConfiguration Configuration { get; }
 
         public IContainer ConfigureServices(ContainerBuilder builder)
         {
             var services = new ServiceCollection();
             ConfigureLogging(services);
+            ConfigureDbContext(services);
             builder.Populate(services);
             ServiceLocator.Current = builder.Build();
             return ServiceLocator.Current;
@@ -42,6 +50,14 @@ namespace Surging.Identity.Server
             services.AddLogging();
         }
 
+        private void ConfigureDbContext(IServiceCollection service)
+        {
+            //service.AddTransient<IRepository>(provider => provider.GetService<IdentityRepository>());
+            service.AddDbContext<IdentityContext>(options =>
+               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")),ServiceLifetime.Transient);
+            
+        }
+
         private static void ConfigureEventBus(IConfigurationBuilder build)
         {
             build
@@ -55,6 +71,12 @@ namespace Surging.Identity.Server
         {
             build
               .AddCacheFile("cacheSettings.json", optional: false);
+        }
+
+        private void ConfigureAppSettings(IConfigurationBuilder build)
+        {
+            build
+              .AddJsonFile("appSettings.json", optional: false);
         }
         #endregion
     }

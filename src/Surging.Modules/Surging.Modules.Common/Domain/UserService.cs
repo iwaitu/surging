@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.Extensions.Options;
+using Surging.Core.CPlatform;
 using Surging.Core.CPlatform.EventBus.Events;
 using Surging.Core.CPlatform.EventBus.Implementation;
 using Surging.Core.CPlatform.Ioc;
@@ -20,9 +22,11 @@ namespace Surging.Modules.Common.Domain
     {
         #region Implementation of IUserService
         private readonly UserRepository _repository;
-        public UserService(UserRepository repository)
+
+        public UserService(UserRepository repository, IOptions<AppConfig> settings)
         {
             this._repository = repository;
+            var sets = settings;
         }
 
         public Task<string> GetUserName(int id)

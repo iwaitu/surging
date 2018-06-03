@@ -27,11 +27,15 @@
     <ProjectReference Include="..\..\Surging.Core\Surging.Core.ProxyGenerator\Surging.Core.ProxyGenerator.csproj" />
     <ProjectReference Include="..\..\Surging.Core\Surging.Core.ServiceHosting\Surging.Core.ServiceHosting.csproj" />
     <ProjectReference Include="..\..\Surging.Core\Surging.Core.System\Surging.Core.System.csproj" />
+    <ProjectReference Include="..\Surging.Identity.Database\Surging.Identity.Database.csproj" />
     <ProjectReference Include="..\Surging.Identity.IModuleService\Surging.Identity.IModuleService.csproj" />
     <ProjectReference Include="..\Surging.Identity.ModuleService\Surging.Identity.ModuleService.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="appSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="cacheSettings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
