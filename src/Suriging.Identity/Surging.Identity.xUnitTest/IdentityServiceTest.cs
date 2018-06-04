@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Surging.Identity.Database;
 using Surging.Identity.IModuleService.ViewModels;
 using Surging.Identity.ModuleService;
@@ -9,12 +10,25 @@ namespace Surging.Identity.xUnitTest
 {
     public class IdentityServiceTest
     {
-        public string ConnectionStr = @"Data Source=.;Initial Catalog=usertest;Integrated Security=True;User ID=sa;Password=123456;Persist Security Info=True;Integrated Security=False;MultipleActiveResultSets=true;";
+        
+        public IConfiguration configuration;
+        public IdentityServiceTest()
+        {
+            configuration = InitConfiguration();
+        }
+
+        public static IConfiguration InitConfiguration()
+        {
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+            return config;
+        }
         [Fact]
         public async Task CreateUser()
         {
             var options = new DbContextOptionsBuilder<IdentityContext>()
-                .UseSqlServer(ConnectionStr).Options;
+                .UseSqlServer(configuration.GetConnectionString("DefaultConnection")).Options;
 
             var service = new UserService(options);
             var user = await service.CreateUser("18107718055", "123456");
@@ -29,7 +43,7 @@ namespace Surging.Identity.xUnitTest
         {
             var loginModel = new AuthenticationRequestData { UserName = "18107718055", Password = "123456" };
             var options = new DbContextOptionsBuilder<IdentityContext>()
-                .UseSqlServer(ConnectionStr).Options;
+                .UseSqlServer(configuration.GetConnectionString("DefaultConnection")).Options;
 
             var service = new UserService(options);
             var user = await service.Authentication(loginModel);
@@ -41,7 +55,7 @@ namespace Surging.Identity.xUnitTest
         public async Task CheckUserExist()
         {
             var options = new DbContextOptionsBuilder<IdentityContext>()
-                .UseSqlServer(ConnectionStr).Options;
+                .UseSqlServer(configuration.GetConnectionString("DefaultConnection")).Options;
 
             var service = new UserService(options);
             var ret = await service.CheckUserExist("18107718055");
@@ -53,7 +67,7 @@ namespace Surging.Identity.xUnitTest
         {
             var loginModel = new AuthenticationRequestData { UserName = "18107718055", Password = "123456" };
             var options = new DbContextOptionsBuilder<IdentityContext>()
-                    .UseSqlServer(ConnectionStr).Options;
+                    .UseSqlServer(configuration.GetConnectionString("DefaultConnection")).Options;
             using (var service = new UserService(options))
             {
                 Parallel.For(0, 20, s =>
