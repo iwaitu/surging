@@ -9,7 +9,7 @@ namespace Surging.Identity.xUnitTest
 {
     public class IdentityServiceTest
     {
-        public string ConnectionStr = @"Data Source=www.nngeo.com,52983;Initial Catalog=usertest;Integrated Security=True;User ID=sa;Password=Nlis@1204;Persist Security Info=True;Integrated Security=False;MultipleActiveResultSets=true;";
+        public string ConnectionStr = @"Data Source=.;Initial Catalog=usertest;Integrated Security=True;User ID=sa;Password=123456;Persist Security Info=True;Integrated Security=False;MultipleActiveResultSets=true;";
         [Fact]
         public async Task CreateUser()
         {
