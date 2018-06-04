@@ -1,14 +1,17 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Surging.Core.Caching;
 using Surging.Core.Caching.Configurations;
 using Surging.Core.CPlatform.Utilities;
 using Surging.Core.EventBusRabbitMQ.Configurations;
+using Surging.Identity.Core.Models;
 using Surging.Identity.Database;
+using Surging.Identity.ModuleService;
 
 namespace Surging.Identity.Server
 {
@@ -28,8 +31,9 @@ namespace Surging.Identity.Server
         {
             var services = new ServiceCollection();
             ConfigureLogging(services);
-            ConfigureDbContext(services);
+            //ConfigureDbContext(services);
             builder.Populate(services);
+            ConfigureDbContext(builder);
             ServiceLocator.Current = builder.Build();
             return ServiceLocator.Current;
         }
@@ -50,12 +54,29 @@ namespace Surging.Identity.Server
             services.AddLogging();
         }
 
-        private void ConfigureDbContext(IServiceCollection service)
+        private void ConfigureDbContext(ContainerBuilder builder)
         {
+            //service.AddDbContextPool<IdentityContext>(options =>
+            //   options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             //service.AddTransient<IRepository>(provider => provider.GetService<IdentityRepository>());
-            service.AddDbContext<IdentityContext>(options =>
-               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")),ServiceLifetime.Transient);
-            
+
+            builder.Register(c =>
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<IdentityContext>();
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                return optionsBuilder.Options;
+            }).InstancePerLifetimeScope();
+            builder.RegisterType<IdentityContext>().AsSelf().InstancePerDependency();
+            builder.RegisterType<IdentityRepository>().As<IRepository>().AsSelf().InstancePerDependency();
+
+            builder.Register(c =>
+            {
+                var optionsBuilder = new DbContextOptionsBuilder<IdentityContext>();
+                optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+                var manager = ApplicationUserManager.Create(optionsBuilder.Options);
+                return manager;
+            }).AsSelf().InstancePerDependency();
+
         }
 
         private static void ConfigureEventBus(IConfigurationBuilder build)

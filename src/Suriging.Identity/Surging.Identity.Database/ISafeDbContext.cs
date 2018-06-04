@@ -8,6 +8,5 @@ namespace Surging.Identity.Database
 {
     public interface ISafeDbContext
     {
-        DbSet<SurgingUser> Users { get; set; }
     }
 }

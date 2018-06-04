@@ -8,6 +8,8 @@ namespace Surging.Identity.Database
 {
     public interface IRepository
     {
+        IdentityContext DbContext { get; }
+
         Task<int> SaveAsync();
         void Dispose();
 

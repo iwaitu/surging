@@ -12,12 +12,20 @@ namespace Surging.Identity.Database
 {
     public class IdentityRepository : IRepository,IDisposable
     {
-        private Lazy<IdentityContext> _lazyContext;
+        private Lazy<IdentityContext> _Context;
         private IDbContextTransaction _transaction;
+        
+
+        public static IdentityRepository Create(DbContextOptions<IdentityContext> option)
+        {
+            var db = new IdentityContext(option);
+            var ret = new IdentityRepository(db);
+            return ret;
+        }
 
         public IdentityRepository(IdentityContext context)
         {
-            _lazyContext = new Lazy<IdentityContext>(() =>
+            _Context = new Lazy<IdentityContext>(() =>
             {
                 var db = context;
                 return db;
@@ -28,7 +36,7 @@ namespace Surging.Identity.Database
         {
             get
             {
-                return _lazyContext.Value;
+                return _Context.Value;
             }
         }
 
@@ -124,7 +132,11 @@ namespace Surging.Identity.Database
 
         public void Update<T>(T entityToUpdate) where T : class
         {
-            throw new NotImplementedException();
+            if (DbContext.Entry(entityToUpdate).State == EntityState.Detached)
+            {
+                DbContext.Set<T>().Attach(entityToUpdate);
+            }
+            DbContext.Entry(entityToUpdate).State = EntityState.Modified;
         }
     }
 }

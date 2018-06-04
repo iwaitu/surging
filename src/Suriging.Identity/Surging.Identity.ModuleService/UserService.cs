@@ -12,67 +12,75 @@ using System;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Autofac;
 
 namespace Surging.Identity.ModuleService
 {
     [ModuleName("User")]
-    public class UserService : ProxyServiceBase, IUserService
+    public class UserService : ProxyServiceBase, IUserService, IDisposable
     {
         //private IdentityRepository _db = new IdentityRepository();
-        private UserManager<SurgingUser> _usrManager;
-        private UserStore<SurgingUser> _usrStore;
-        private IPasswordHasher<SurgingUser> passwordHasher = new PasswordHasher<SurgingUser>();
-        private UpperInvariantLookupNormalizer lookupNormalizer = new UpperInvariantLookupNormalizer();
-        private static readonly object locker = new object();
+        private DbContextOptions<IdentityContext> _dbOptions;
+        private IComponentContext _iocContext;
 
-        public UserService(IdentityContext db)
+        public UserService(IComponentContext iocContext)
         {
-            _usrStore = new UserStore<SurgingUser>(db);
-            _usrManager = new UserManager<SurgingUser>(_usrStore, null, null, null, null, null, null, null, null);
-            _usrManager.PasswordHasher = passwordHasher;
-            _usrManager.KeyNormalizer = lookupNormalizer;
+            _iocContext = iocContext;
         }
 
+        public UserService(DbContextOptions<IdentityContext> options)
+        {
+            _dbOptions = options;
+        }
+
+        public ApplicationUserManager GenerelUserManager()
+        {
+            if (_iocContext != null)
+            {
+                return _iocContext.Resolve<ApplicationUserManager>();
+            }
+            else
+            {
+                return ApplicationUserManager.Create(_dbOptions);
+            }
+        }
+        
         public async Task<UserModel> Authentication(AuthenticationRequestData requestData)
         {
             try
             {
-                var user = await _usrManager.FindByNameAsync(requestData.UserName);
-                if (user != null)
+                using (var manager = GenerelUserManager())
                 {
-                    var ret = await _usrManager.CheckPasswordAsync(user, requestData.Password);
-                    if (ret)
+                    var user = await manager.FindByNameAsync(requestData.UserName);
+                    //var user = await _db.Table<SurgingUser>(p => p.NormalizedUserName == lookupNormalizer.Normalize(requestData.UserName)).FirstOrDefaultAsync();
+                    if (user != null)
                     {
-                        user.LastLoginDate = DateTime.Now;
-                        await _usrManager.UpdateAsync(user);
-                        return user.ToModel();
+                        //return user.ToModel();
+                        var ret = await manager.CheckPasswordAsync(user, requestData.Password);
+                        if (ret)
+                        {
+                            user.LastLoginDate = DateTime.Now;
+                            await manager.GetUserStore().UpdateAsync(user, System.Threading.CancellationToken.None);
+                            return user.ToModel();
+                        }
+                        else
+                        {
+                            return null;
+                        }
                     }
-                    else
-                    {
-                        return null;
-                    }
+                    return null;
                 }
-                return null;
 
 
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex.Message);
                 return null;
             }
         }
 
-        private IUserPasswordStore<SurgingUser> GetPasswordStore()
-        {
-            var cast = _usrStore as IUserPasswordStore<SurgingUser>;
-            if (cast == null)
-            {
-                throw new NotSupportedException("fuck");
-            }
-            return cast;
-        }
-
+        
         public Task<bool> CheckPersonNoUnqine(string id)
         {
             return Task.FromResult(false);
@@ -85,32 +93,41 @@ namespace Surging.Identity.ModuleService
 
         public async Task<UserModel> CreateUser(string username, string password)
         {
-            var exituser = await _usrManager.FindByNameAsync(username);
-            if (exituser != null)
-                return null;
-            var user = new SurgingUser();
-            user.SecurityStamp = Guid.NewGuid().ToString();
-            user.UserName = username;
-            user.NormalizedUserName = _usrManager.KeyNormalizer.Normalize(username);
-            user.PhoneNumber = username;
-            
-            var pwhash = passwordHasher.HashPassword(user, password);
-            user.PasswordHash = pwhash;
-            var ret = await _usrStore.CreateAsync(user);
-            if (ret.Succeeded)
+            using (var manager = GenerelUserManager())
             {
-                return user.ToModel();
+                var exituser = await manager.FindByNameAsync(username);
+                if (exituser != null)
+                    return null;
+                var user = new SurgingUser();
+                user.SecurityStamp = Guid.NewGuid().ToString();
+                user.UserName = username;
+                user.NormalizedUserName = manager.KeyNormalizer.Normalize(username);
+                user.PhoneNumber = username;
+
+                var pwhash = manager.PasswordHasher.HashPassword(user, password);
+                user.PasswordHash = pwhash;
+                var ret = await manager.GetUserStore().CreateAsync(user, System.Threading.CancellationToken.None);
+                if (ret.Succeeded)
+                {
+                    return user.ToModel();
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
-            {
-                return null;
-            }
+                
         }
+
 
         public async Task<bool> CheckUserExist(string username)
         {
-            var user = await _usrManager.FindByNameAsync(username);
-            return user != null;
+            using (var manager = GenerelUserManager())
+            {
+                var user = await manager.FindByNameAsync(username);
+                return user != null;
+            }
+                
         }
 
         public Task<UserModel> GetUserInfo(string id)
@@ -121,14 +138,22 @@ namespace Surging.Identity.ModuleService
 
         public async Task<bool> ResetPassword(string userid,string token, string newpassword)
         {
-            var user = await _usrManager.FindByIdAsync(userid);
-            if(user != null)
+            using (var manager = GenerelUserManager())
             {
-                var ret = await _usrManager.ResetPasswordAsync(user, token, newpassword);
-                return ret.Succeeded;
+                var user = await manager.FindByIdAsync(userid);
+                if (user != null)
+                {
+                    var ret = await manager.ResetPasswordAsync(user, token, newpassword);
+                    return ret.Succeeded;
+                }
+                return false;
             }
-            return false;
+                
         }
 
+        public void Dispose()
+        {
+            
+        }
     }
 }
