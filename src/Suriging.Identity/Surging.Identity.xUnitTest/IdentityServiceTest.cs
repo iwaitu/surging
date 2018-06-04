@@ -52,17 +52,18 @@ namespace Surging.Identity.xUnitTest
         public void ParallelTest()
         {
             var loginModel = new AuthenticationRequestData { UserName = "18107718055", Password = "123456" };
-            Parallel.For(0, 20, s =>
-            {
-                var options = new DbContextOptionsBuilder<IdentityContext>()
+            var options = new DbContextOptionsBuilder<IdentityContext>()
                     .UseSqlServer(ConnectionStr).Options;
-                using (var service = new UserService(options))
+            using (var service = new UserService(options))
+            {
+                Parallel.For(0, 20, s =>
                 {
                     var ret = service.Authentication(loginModel).Result;
                     Assert.NotNull(ret);
-                }
-
-            });
+                });
+                
+            }
+            
         }
     }
 }
