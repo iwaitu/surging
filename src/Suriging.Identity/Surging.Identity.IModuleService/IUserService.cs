@@ -1,4 +1,5 @@
 ﻿using Surging.Core.Caching;
+using Surging.Core.CPlatform.Filters.Implementation;
 using Surging.Core.CPlatform.Ioc;
 using Surging.Core.CPlatform.Runtime.Server.Implementation.ServiceDiscovery.Attributes;
 using Surging.Core.System.Intercept;
@@ -13,6 +14,7 @@ namespace Surging.Identity.IModuleService
         Task<UserModel> Authentication(AuthenticationRequestData requestData);
 
         [Service(Date = "2018-5-31", Director = "iwaitu", Name = "获取用户")]
+        [Authorization(AuthType = AuthorizationType.JWT)]
         [InterceptMethod(CachingMethod.Get, Key = "GetUser_id_{0}", CacheSectionType = SectionType.ddlCache, Mode = CacheTargetType.Redis, Time = 480)]
         Task<UserModel> GetUserInfo(string id);
 

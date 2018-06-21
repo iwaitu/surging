@@ -55,8 +55,7 @@ namespace Surging.ApiGateway.Controllers
                 result = ServiceResult<object>.Create(true, await servicePartProvider.Merge(path, model));
                 result.StatusCode = (int)ServiceStatusCode.Success;
             }
-            else
-            if ( OnAuthorization(path, model,ref result))
+            else if ( OnAuthorization(path, model,ref result))
             {
                 if (path == GateWayAppConfig.AuthorizationRoutePath)
                 {

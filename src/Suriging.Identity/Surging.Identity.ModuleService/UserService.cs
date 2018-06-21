@@ -23,13 +23,10 @@ namespace Surging.Identity.ModuleService
         private DbContextOptions<IdentityContext> _dbOptions;
         private IComponentContext _iocContext;
 
-        public UserService(IComponentContext iocContext)
+
+        public UserService(IComponentContext iocContext,DbContextOptions<IdentityContext> options)
         {
             _iocContext = iocContext;
-        }
-
-        public UserService(DbContextOptions<IdentityContext> options)
-        {
             _dbOptions = options;
         }
 
