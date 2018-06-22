@@ -576,18 +576,20 @@ namespace Surging.Core.CPlatform
         public static IEnumerable<string> GetDataContractName(this IServiceBuilder builder)
         {
             var namespaces = new List<string>();
-            var referenceAssemblies = GetReferenceAssembly();
+            var referenceAssemblies = builder.GetInterfaceService();
             referenceAssemblies.ForEach(p =>
             {
-                namespaces.AddRange( p.GetTypes().Where(t => t.GetCustomAttribute<DataContractAttribute>() !=null).Select(n=>n.Namespace));
+                namespaces.AddRange( p.Assembly.GetTypes().Where(t => t.GetCustomAttribute<DataContractAttribute>() !=null).Select(n=>n.Namespace));
             });
             return namespaces.Distinct();
         }
 
         private static List<Assembly> GetReferenceAssembly(params string[] virtualPaths)
         {
-            string rootPath = AppContext.BaseDirectory;
+            var rootPath = AppContext.BaseDirectory;
             var existsPath = virtualPaths.Any();
+            if (existsPath && !string.IsNullOrEmpty(AppConfig.ServerOptions.RootPath))
+                rootPath = AppConfig.ServerOptions.RootPath;
             var result = _referenceAssembly;
             if (!result.Any() || existsPath)
             {

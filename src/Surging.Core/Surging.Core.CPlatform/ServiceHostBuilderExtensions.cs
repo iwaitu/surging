@@ -16,6 +16,7 @@ using Surging.Core.CPlatform.Configurations;
 using Surging.Core.CPlatform.Module;
 using System.Diagnostics;
 using Surging.Core.CPlatform.Engines;
+using Surging.Core.CPlatform.Utilities;
 
 namespace Surging.Core.CPlatform
 {
@@ -33,7 +34,8 @@ namespace Surging.Core.CPlatform
                 string _ip = AppConfig.ServerOptions.Ip??ip;
                 _port = AppConfig.ServerOptions.IpEndpoint?.Port ?? _port;
                 _ip = AppConfig.ServerOptions.IpEndpoint?.Address.ToString() ?? _ip;
-                
+               
+
                 if (_ip.IndexOf(".") < 0 || _ip == "" || _ip == "0.0.0.0")
                 {
                     NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
@@ -53,14 +55,23 @@ namespace Surging.Core.CPlatform
                         }
                     }
                 }
-
+                var mappingIp= AppConfig.ServerOptions.MappingIP ?? _ip;
+                var mappingPort = AppConfig.ServerOptions.MappingPort;
+                if (mappingPort == 0)
+                    mappingPort = _port;
                 new ServiceRouteWatch(mapper.Resolve<CPlatformContainer>(),  () =>
                 {
                     var addressDescriptors = serviceEntryManager.GetEntries().Select(i =>
-                    new ServiceRoute
                     {
-                        Address = new[] { new IpAddressModel { Ip = _ip, Port = _port, ProcessorTime = Process.GetCurrentProcess().TotalProcessorTime.TotalSeconds, Token = serviceToken } },
-                        ServiceDescriptor = i.Descriptor
+                        i.Descriptor.Token = serviceToken;
+                       return new ServiceRoute
+                        {
+                            Address = new[] { new IpAddressModel { Ip = mappingIp, Port = mappingPort,
+                            ProcessorTime = Math.Round(Convert.ToDecimal(Process.GetCurrentProcess().TotalProcessorTime.TotalSeconds),2, MidpointRounding.AwayFromZero),
+                           } },
+                            ServiceDescriptor = i.Descriptor
+
+                        };
                     }).ToList();
                     mapper.Resolve<IServiceRouteManager>().SetRoutesAsync(addressDescriptors);
                 });
@@ -106,13 +117,11 @@ namespace Surging.Core.CPlatform
 
         public static void BuildServiceEngine(IContainer container)
         {
-            if(container.IsRegistered<IServiceEngine>())
+            if (container.IsRegistered<IServiceEngine>())
             {
-                using (var soap = container.BeginLifetimeScope(
-                  builder =>
-                  {
-                      container.Resolve<IServiceEngineBuilder>().Build(builder);
-                  })) {}
+                var builder = new ContainerBuilder();
+                container.Resolve<IServiceEngineBuilder>().Build(builder);
+                builder.Update(container);
             }
         }
     }

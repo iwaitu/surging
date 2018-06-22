@@ -1,6 +1,8 @@
 ﻿using Surging.Core.CPlatform.Engines.Implementation;
+using Surging.Core.CPlatform.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Surging.Services.Server
@@ -9,10 +11,16 @@ namespace Surging.Services.Server
     {
         public SurgingServiceEngine()
         {
+        
             ModuleServiceLocationFormats = new[] {
-                @"Modules",
-                 @"Modules/2.1"
-            }; 
+                EnvironmentHelper.GetEnvironmentVariable("${ModulePath1}|Modules"),
+            };
+            ComponentServiceLocationFormats  = new[] {
+                 EnvironmentHelper.GetEnvironmentVariable("${ComponentPath1}|Components"),
+            };
+            //ModuleServiceLocationFormats = new[] {
+            //   ""
+            //};
         }
     }
 }

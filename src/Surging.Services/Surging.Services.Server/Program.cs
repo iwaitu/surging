@@ -60,30 +60,23 @@ namespace Surging.Services.Server
                         builder.Register(p => new CPlatformContainer(ServiceLocator.Current));
                     });
                 })
-                .SubscribeAt() 
-               // .UseLog4net(LogLevel.Error, "Configs/log4net.config")
-                .UseNLog(LogLevel.Error, "Configs/NLog.config")
+              .SubscribeAt()
+               // .UseLog4net(LogLevel.Trace, "Configs/log4net.config")
+               .UseNLog("${LogPath}|Configs/NLog.config")
                 //.UseServer("127.0.0.1", 98)
                 //.UseServer("127.0.0.1", 98，“true”) //自动生成Token
                 //.UseServer("127.0.0.1", 98，“123456789”) //固定密码Token
                 .UseServer(options =>
                 {
-                    // options.IpEndpoint = new IPEndPoint(IPAddress.Any, 98);  
                     options.Token = "True";
                     options.ExecutionTimeoutInMilliseconds = 30000;
                     options.MaxConcurrentRequests = 200;
                 })
                 .UseServiceCache()
-                // .Configure(build =>
-                //build.AddZookeeperFile("Configs/zookeeper.json", optional: false))
-               .Configure(build =>
-                build.AddConsulFile("Configs/consul.json", optional: false))
                 .Configure(build =>
-                build.AddEventBusFile("eventBusSettings.json", optional: false))
-                .Configure(build =>
-                build.AddCacheFile("cacheSettings.json", optional: false,reloadOnChange:true))
+                build.AddCacheFile("${cachepath}|cacheSettings.json", optional: false, reloadOnChange: true))
                   .Configure(build =>
-                build.AddCPlatformFile("surgingSettings.json", optional: false, reloadOnChange: true))
+                build.AddCPlatformFile("${surgingpath}|surgingSettings.json", optional: false, reloadOnChange: true))
                 .UseProxy()
                 .UseStartup<Startup>()
                 .Build();

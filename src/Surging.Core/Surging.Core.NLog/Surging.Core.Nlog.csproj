@@ -20,11 +20,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="2.0.0" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Surging.Core.CPlatform\Surging.Core.CPlatform.csproj" />
     <ProjectReference Include="..\Surging.Core.ServiceHosting\Surging.Core.ServiceHosting.csproj" />
   </ItemGroup>
 

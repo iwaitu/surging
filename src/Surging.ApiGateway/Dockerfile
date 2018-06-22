@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 FROM microsoft/dotnet:2.1-aspnetcore-runtime AS base
 WORKDIR /app
 ENV ASPNETCORE_URLS=http://+:729
@@ -29,4 +30,9 @@ RUN dotnet publish Surging.ApiGateway.csproj -c Release -o /app
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
+=======
+FROM microsoft/dotnet:2.1-runtime
+WORKDIR /app
+COPY . .
+>>>>>>> upstream/master
 ENTRYPOINT ["dotnet", "Surging.ApiGateway.dll"]
