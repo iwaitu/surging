@@ -15,7 +15,7 @@ namespace Surging.Identity.IModuleService
 
         [Service(Date = "2018-5-31", Director = "iwaitu", Name = "获取用户")]
         [Authorization(AuthType = AuthorizationType.JWT)]
-        [InterceptMethod(CachingMethod.Get, Key = "GetUser_id_{0}", CacheSectionType = SectionType.ddlCache, Mode = CacheTargetType.Redis, Time = 480)]
+        [InterceptMethod(CachingMethod.Get, Key = "GetUserInfo_id_{0}", CacheSectionType = SectionType.ddlCache, Mode = CacheTargetType.Redis, Time = 480)]
         Task<UserModel> GetUserInfo(string id);
 
         [Service(Date = "2018-5-31", Director = "iwaitu", Name = "检查证件号是否唯一")]
