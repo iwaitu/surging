@@ -1,6 +1,8 @@
 ﻿using MessagePack;
 using Surging.Core.System.Intercept;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Surging.Identity.IModuleService.ViewModels
 {
@@ -86,5 +88,8 @@ namespace Surging.Identity.IModuleService.ViewModels
 
         [Key(15)]
         public DateTime UpdateDate { get; set; } = DateTime.Now;
+
+        [Key(16)]
+        public ICollection<string> Roles { get; set; } = new List<string>();
     }
 }

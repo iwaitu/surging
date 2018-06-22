@@ -12,6 +12,7 @@ using Surging.Core.EventBusRabbitMQ.Configurations;
 using Surging.Identity.Core.Models;
 using Surging.Identity.Database;
 using Surging.Identity.ModuleService;
+using System;
 
 namespace Surging.Identity.Server
 {
@@ -33,6 +34,7 @@ namespace Surging.Identity.Server
             ConfigureLogging(services);
             //ConfigureDbContext(services);
             builder.Populate(services);
+            
             ConfigureDbContext(builder);
             ServiceLocator.Current = builder.Build();
             return ServiceLocator.Current;
@@ -68,7 +70,7 @@ namespace Surging.Identity.Server
             }).InstancePerLifetimeScope();
             builder.RegisterType<IdentityContext>().AsSelf().InstancePerDependency();
             builder.RegisterType<IdentityRepository>().As<IRepository>().AsSelf().InstancePerDependency();
-
+            
             builder.Register(c =>
             {
                 var optionsBuilder = new DbContextOptionsBuilder<IdentityContext>();

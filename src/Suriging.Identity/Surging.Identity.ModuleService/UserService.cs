@@ -127,10 +127,30 @@ namespace Surging.Identity.ModuleService
                 
         }
 
-        public Task<UserModel> GetUserInfo(string id)
+        public async Task<UserModel> GetUserInfo(string id)
         {
+            using (var manager = GenerelUserManager())
+            {
+                var user = await manager.FindByIdAsync(id);
+                if(user != null)
+                {
+                    var um = user.ToModel();
+                    try
+                    {
+                        var roles = await manager.GetRolesAsync(user);
+                    }
+                    catch (Exception ex)
+                    {
 
-            return Task.FromResult(new UserModel());
+                        throw ex;
+                    }
+                    
+                    //um.Roles = roles;
+                    return um;
+                }
+                return null;
+            }
+            
         }
 
         public async Task<bool> ResetPassword(string userid,string token, string newpassword)

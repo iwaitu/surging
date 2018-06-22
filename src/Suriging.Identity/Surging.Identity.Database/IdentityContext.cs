@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Surging.Identity.Core.Models;
@@ -7,7 +8,7 @@ using System;
 namespace Surging.Identity.Database
 {
 
-    public class IdentityContext : IdentityDbContext<SurgingUser, SurgingRole, string>
+    public class IdentityContext : IdentityDbContext<SurgingUser>
     {
         //private static readonly ILoggerFactory _loggerFactory = new LoggerFactory();
         //public IdentityRepository(IOptions<IdentitySetting>)
@@ -31,11 +32,18 @@ namespace Surging.Identity.Database
             return current;
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //optionsBuilder.EnableSensitiveDataLogging()
+            //    .UseLoggerFactory(_loggerFactory)
+            //    .UseSqlServer(@"Data Source=www.nngeo.com,52983;Initial Catalog=usertest;Integrated Security=True;User ID=sa;Password=Nlis@1204;Persist Security Info=True;Integrated Security=False;MultipleActiveResultSets=true;");
+            
+        }
+
+        //protected override void OnModelCreating(ModelBuilder builder)
         //{
-        //    optionsBuilder.EnableSensitiveDataLogging()
-        //        .UseLoggerFactory(_loggerFactory)
-        //        .UseSqlServer(@"Data Source=www.nngeo.com,52983;Initial Catalog=usertest;Integrated Security=True;User ID=sa;Password=Nlis@1204;Persist Security Info=True;Integrated Security=False;MultipleActiveResultSets=true;");
+        //    base.OnModelCreating(builder);
+        //    builder.Entity<IdentityUserRole<Guid>>().HasKey(p => new { p.UserId, p.RoleId });
         //}
     }
 }
