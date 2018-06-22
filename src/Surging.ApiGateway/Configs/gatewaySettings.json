@@ -11,11 +11,7 @@
   },
   "Register": {
     "Provider": "Consul",
-<<<<<<< HEAD
-    "Address": "10.0.75.1:8500"
-=======
-    "Address": "${Register_Conn}|127.0.0.1:8500"
->>>>>>> upstream/master
+    "Address": "${Register_Conn}|10.0.75.1:8500"
   },
   "ServicePart": {
     "MainPath": "part/service/aggregation",

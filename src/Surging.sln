@@ -57,7 +57,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surging.IModuleServices.Man
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surging.Core.Nlog", "Surging.Core\Surging.Core.NLog\Surging.Core.Nlog.csproj", "{704B35B0-9029-46CE-AEA2-A3A3AD3FC2C4}"
 EndProject
-<<<<<<< HEAD
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{4C758F39-E1AA-4A0D-83DB-B6C7CE0F3765}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Surging.Identity", "Surging.Identity", "{97F3A538-57EB-4248-8511-448980B33A60}"
@@ -72,10 +71,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surging.Identity.ModuleServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surging.Identity.Server", "Suriging.Identity\Surging.Identity.Server\Surging.Identity.Server.csproj", "{EC7F1D18-EFAD-4248-B8B7-A003E6D9943C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Surging.Identity.xUnitTest", "Suriging.Identity\Surging.Identity.xUnitTest\Surging.Identity.xUnitTest.csproj", "{A0992746-FF48-42DF-8B67-6D73A2540A67}"
-=======
-Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{117D3803-8937-4A28-B296-46BBF945FD7B}"
->>>>>>> upstream/master
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Surging.Identity.xUnitTest", "Suriging.Identity\Surging.Identity.xUnitTest\Surging.Identity.xUnitTest.csproj", "{A0992746-FF48-42DF-8B67-6D73A2540A67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -175,7 +171,6 @@ Global
 		{704B35B0-9029-46CE-AEA2-A3A3AD3FC2C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{704B35B0-9029-46CE-AEA2-A3A3AD3FC2C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{704B35B0-9029-46CE-AEA2-A3A3AD3FC2C4}.Release|Any CPU.Build.0 = Release|Any CPU
-<<<<<<< HEAD
 		{4C758F39-E1AA-4A0D-83DB-B6C7CE0F3765}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4C758F39-E1AA-4A0D-83DB-B6C7CE0F3765}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C758F39-E1AA-4A0D-83DB-B6C7CE0F3765}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -204,12 +199,6 @@ Global
 		{A0992746-FF48-42DF-8B67-6D73A2540A67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0992746-FF48-42DF-8B67-6D73A2540A67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0992746-FF48-42DF-8B67-6D73A2540A67}.Release|Any CPU.Build.0 = Release|Any CPU
-=======
-		{117D3803-8937-4A28-B296-46BBF945FD7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{117D3803-8937-4A28-B296-46BBF945FD7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{117D3803-8937-4A28-B296-46BBF945FD7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{117D3803-8937-4A28-B296-46BBF945FD7B}.Release|Any CPU.Build.0 = Release|Any CPU
->>>>>>> upstream/master
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
